@@ -18,8 +18,8 @@ public class ReceiveSpeedAngle implements Runnable {
 				//if (answer.errorcode==0) {
 					//arduino.inputBuffer = answer.bufferStream;
 					String bitstream = arduino.inputBuffer;	
-					SpeedAngle sa = arduino.readSpeedAngle();
-					if(bitstream != "") {
+					if(!bitstream.isEmpty()) {
+						SpeedAngle sa = arduino.readSpeedAngle();
 						gui.setReceivedValues(sa.speed, sa.angle, bitstream);
 					}
 				//}
