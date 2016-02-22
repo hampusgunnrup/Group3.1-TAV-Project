@@ -1,5 +1,5 @@
 package main;
-
+//Git test
 public class Arduino {
 	//public String inputBuffer;
 	public String outputBuffer;
