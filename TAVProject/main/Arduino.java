@@ -163,6 +163,8 @@ public class Arduino {
 		if (((MinTorque <= Torque && Torque <= MaxTorque) && (Min_IR_Dist <= IR_Dist && IR_Dist <= Max_IR_Dist)) && (Min_Ultra_Dist <= ULTRA_Dist && ULTRA_Dist<= Max_Ultra_Dist)) {
 			answer = start_Del + T + comma + IR + comma + Ultra + comma + ParityCheck(T+IR+Ultra) + end_Del;
 		}
+		
+		this.outputBuffer += answer;
 		return answer;
 	}
 
