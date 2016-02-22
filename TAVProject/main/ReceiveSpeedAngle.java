@@ -14,18 +14,13 @@ public class ReceiveSpeedAngle implements Runnable {
 	public void run () {
 		while (running) {
 			try {
-				//ReadAnswer answer = arduino.ReadFromBuffer(21);
-				//if (answer.errorcode==0) {
-					//arduino.inputBuffer = answer.bufferStream;
-					String bitstream = arduino.inputBuffer;	
-					if(!bitstream.isEmpty()) {
-						SpeedAngle sa = arduino.readSpeedAngle();
-						gui.setReceivedValues(sa.speed, sa.angle, bitstream);
-					}
-				//}
+				String bitstream = arduino.inputBuffer;	
+				if(!bitstream.isEmpty()) {
+					SpeedAngle sa = arduino.readSpeedAngle();
+					gui.setReceivedValues(sa.speed, sa.angle, bitstream);
+				}
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

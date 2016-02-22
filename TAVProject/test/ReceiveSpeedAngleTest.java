@@ -11,7 +11,7 @@ import main.UpdateDisplay;
 
 public class ReceiveSpeedAngleTest {
 
-	/*@Test
+	@Test
 	public void testRunOneIteration() {
 		
 		Arduino arduino = new Arduino();
@@ -26,7 +26,7 @@ public class ReceiveSpeedAngleTest {
 		receiveSpeedAngleThread.start();
 		
 		try {
-			Thread.sleep(500); // Make sure that receiveSpeedAngle has finished
+			Thread.sleep(1000); // Make sure that receiveSpeedAngle has finished
 		} catch(InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -44,7 +44,7 @@ public class ReceiveSpeedAngleTest {
 		Assert.assertEquals(expectedSpeed, actualSpeed);
 		Assert.assertEquals(expectedAngle, actualAngle);
 		
-	}*/
+	}
 	
 	@Test
 	public void testRunSeveralIterations() {
