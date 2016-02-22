@@ -1,22 +1,28 @@
 package main;
 
 public class ReceiveSpeedAngle implements Runnable {
-	Arduino arduino;
-	UpdateDisplay gui;
+	private Arduino arduino;
+	private UpdateDisplay gui;
+	private boolean running;
 	
 	public ReceiveSpeedAngle (Arduino arduino, UpdateDisplay gui) {
 		this.arduino = arduino;
 		this.gui = gui;
+		this.running = true;
 	}
+	
 	public void run () {
-		while (true) {
+		while (running) {
 			try {
-				ReadAnswer answer = arduino.ReadFromBuffer(21);
-				if (answer.errorcode==0) {
-					arduino.bitstream = answer.bufferStream;
+				//ReadAnswer answer = arduino.ReadFromBuffer(21);
+				//if (answer.errorcode==0) {
+					//arduino.inputBuffer = answer.bufferStream;
+					String bitstream = arduino.inputBuffer;	
 					SpeedAngle sa = arduino.readSpeedAngle();
-					gui.setReceivedValues(sa.speed, sa.angle, answer.bufferStream);
-				}
+					if(bitstream != "") {
+						gui.setReceivedValues(sa.speed, sa.angle, bitstream);
+					}
+				//}
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -24,4 +30,9 @@ public class ReceiveSpeedAngle implements Runnable {
 			}
 		}
 	}
+	
+	public void stop() {
+		this.running = false;
+	}
+	
 }

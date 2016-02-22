@@ -41,7 +41,7 @@ public class Display {
 	
 	public double getIR() {
 		String IR = irTextField.getText();
-		if (StringUtils.isNumericSpace (IR)) {
+		if (stringIsDouble(IR)) { // StringUtils.isNumericSpace (IR)
 			return Double.parseDouble(IR);
 		}
 		else
@@ -50,7 +50,7 @@ public class Display {
 	
 	public double getUltra() {
 		String Ultra = ultraTextField.getText();
-		if (StringUtils.isNumericSpace (Ultra)) {
+		if (stringIsDouble(Ultra)) {
 			return Double.parseDouble(Ultra);
 		}
 		else
@@ -59,7 +59,7 @@ public class Display {
 	
 	public double getTorque() {
 		String Torque = torqueTextField.getText();
-		if (StringUtils.isNumericSpace (Torque)) {
+		if (stringIsDouble(Torque)) {
 			return Double.parseDouble(Torque);
 		}
 		else
@@ -186,4 +186,49 @@ public class Display {
 		lblAngle.setBounds(236, 133, 46, 14);
 		frmGraphicalInterface.getContentPane().add(lblAngle);
 	}
+
+
+	/* GETTERS FOR TESTCASES*/
+	public String getSpeed() {
+		return speedTextField.getText();
+	}
+
+	public String getAngle() {
+		return angleTextField.getText();
+	}
+	
+	public String getReceiveBinary() {
+		return binaryRecTextField.getText();
+	}
+	
+	public String getSentBinary() {
+		return binarySentTextField.getText();
+	}
+	
+	/* SETTERS FOR TESTCASES */
+	public void setTorque(String torque) {
+		torqueTextField.setText(torque);
+	}
+	
+	public void setIR(String ir) {
+		irTextField.setText(ir);
+	}
+	
+	public void setUltra(String ultra) {
+		ultraTextField.setText(ultra);
+	}
+	
+	/* HELPER METHODS */
+    public boolean stringIsDouble(String value) {
+
+        try {
+            Double.parseDouble(value);
+        } catch(NumberFormatException e){
+            return false;
+        }
+
+        return true;
+
+    }
+	
 }

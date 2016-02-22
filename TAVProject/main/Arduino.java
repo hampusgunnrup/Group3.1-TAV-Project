@@ -1,9 +1,9 @@
 package main;
 
 public class Arduino {
-	public String inputBuffer;
+	//public String inputBuffer;
 	public String outputBuffer;
-	public String bitstream;
+	public String inputBuffer;
 	
 	int MaxTorque = 30;
 	int MinTorque = -30;
@@ -19,7 +19,7 @@ public class Arduino {
 	public Arduino() {
 		inputBuffer = "";
 		outputBuffer = "";
-		bitstream = "";
+		//inputBuffer = "";
 	}
 	
 	/**
@@ -100,36 +100,36 @@ public class Arduino {
 	//Read Speed and Angle
 	public SpeedAngle readSpeedAngle() {
 		SpeedAngle answer;
-		if (bitstream.length() < minbitstreamsize) {//TC8
+		if (inputBuffer.length() < minbitstreamsize) {//TC8
 			answer = new SpeedAngle();
 		}
-		else if (bitstream.indexOf(start_Del)<0) {//TC7
+		else if (inputBuffer.indexOf(start_Del)<0) {//TC7
 			answer = new SpeedAngle();
 		}
 		else {
-			int start = bitstream.indexOf(start_Del);//TC2,TC1
+			int start = inputBuffer.indexOf(start_Del);//TC2,TC1
 			int end = start + minbitstreamsize;
-			if (end-1 >= bitstream.length()) {//TC8
+			if (end-1 >= inputBuffer.length()) {//TC8
 				answer = new SpeedAngle();
 			}
 			else
 			{
-				String packet = bitstream.substring(start, end);
+				String packet = inputBuffer.substring(start, end);
 				if (packet.charAt(20)!=end_Del.charAt(0)) {//TC6
 					answer = new SpeedAngle();
-					bitstream = bitstream.substring(start+1);
+					inputBuffer = inputBuffer.substring(start+1);
 				}
 				else if (packet.charAt(9)!=comma.charAt(0)) {//TC5
 					answer = new SpeedAngle();
-					bitstream = bitstream.substring(start+1);
+					inputBuffer = inputBuffer.substring(start+1);
 				}
 				else if (packet.charAt(18)!=comma.charAt(0)) {//TC4
 					answer = new SpeedAngle();
-					bitstream = bitstream.substring(start+1);
+					inputBuffer = inputBuffer.substring(start+1);
 				}
 				else if (ParityCheck(packet.substring(0,18)).charAt(0) != packet.charAt(19)) { //TC3 parity check failed
 					answer = new SpeedAngle();
-					bitstream = bitstream.substring(start+1);
+					inputBuffer = inputBuffer.substring(start+1);
 				}
 				else {//TC1,TC2
 					String speedStr = packet.substring(1,9);
@@ -137,7 +137,7 @@ public class Arduino {
 					double speed = bin8_to_dec(speedStr);
 					double torque = bin8_to_dec(torqueStr);
 					answer = new SpeedAngle(speed, torque);
-					bitstream = bitstream.substring(end);
+					inputBuffer = inputBuffer.substring(end);
 				}
 			}
 		}
