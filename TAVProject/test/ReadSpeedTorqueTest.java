@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before;
 import main.Arduino;
-import main.SpeedTorque;
+import main.SpeedAngle;
 
 public class ReadSpeedTorqueTest {
 	Arduino arduino;
@@ -24,8 +24,8 @@ public class ReadSpeedTorqueTest {
 	//parity check ok
 	//NO BITS IN FRONT
 		arduino.bitstream = "/10001111,00001111,1*";
-		SpeedTorque expected = new SpeedTorque(-15,15);
-		SpeedTorque received = arduino.ReadSpeedTorque();
+		SpeedAngle expected = new SpeedAngle(-15,15);
+		SpeedAngle received = arduino.readSpeedAngle();
 		Assert.assertEquals(expected, received);
 		String expectedBitstream = "";
 		Assert.assertEquals(expectedBitstream, arduino.bitstream);
@@ -41,8 +41,8 @@ public class ReadSpeedTorqueTest {
 	//parity check ok
 	//BITS IN FRONT
 		arduino.bitstream = "1101/10001111,00001111,1*";
-		SpeedTorque expected = new SpeedTorque(-15,15);
-		SpeedTorque received = arduino.ReadSpeedTorque();
+		SpeedAngle expected = new SpeedAngle(-15,15);
+		SpeedAngle received = arduino.readSpeedAngle();
 		Assert.assertEquals(expected, received);
 		String expectedBitstream = "";
 		Assert.assertEquals(expectedBitstream, arduino.bitstream);
@@ -57,8 +57,8 @@ public class ReadSpeedTorqueTest {
 	//Second comma found
 	//Failed parity check
 		arduino.bitstream = "/11110000,11110000,1*";
-		SpeedTorque expected = new SpeedTorque();
-		SpeedTorque received = arduino.ReadSpeedTorque();
+		SpeedAngle expected = new SpeedAngle();
+		SpeedAngle received = arduino.readSpeedAngle();
 		Assert.assertEquals(expected, received);
 		String expectedBitstream = "11110000,11110000,1*";
 		Assert.assertEquals(expectedBitstream, arduino.bitstream);
@@ -72,8 +72,8 @@ public class ReadSpeedTorqueTest {
 	//First comma found
 	//Second comma not found
 		arduino.bitstream = "/11110000,1111000010*";
-		SpeedTorque expected = new SpeedTorque();
-		SpeedTorque received = arduino.ReadSpeedTorque();
+		SpeedAngle expected = new SpeedAngle();
+		SpeedAngle received = arduino.readSpeedAngle();
 		Assert.assertEquals(expected, received);
 		String expectedBitstream = "11110000,1111000010*";
 		Assert.assertEquals(expectedBitstream, arduino.bitstream);
@@ -86,8 +86,8 @@ public class ReadSpeedTorqueTest {
 	//End found
 	//First comma not found
 		arduino.bitstream = "/11110000111110000,0*";
-		SpeedTorque expected = new SpeedTorque();
-		SpeedTorque received = arduino.ReadSpeedTorque();
+		SpeedAngle expected = new SpeedAngle();
+		SpeedAngle received = arduino.readSpeedAngle();
 		Assert.assertEquals(expected, received);
 		String expectedBitstream = "11110000111110000,0*";
 		Assert.assertEquals(expectedBitstream, arduino.bitstream);
@@ -99,8 +99,8 @@ public class ReadSpeedTorqueTest {
 	//Start found
 	//End not found
 		arduino.bitstream = "/11110000,11110000,01";
-		SpeedTorque expected = new SpeedTorque();
-		SpeedTorque received = arduino.ReadSpeedTorque();
+		SpeedAngle expected = new SpeedAngle();
+		SpeedAngle received = arduino.readSpeedAngle();
 		Assert.assertEquals(expected, received);
 		String expectedBitstream = "11110000,11110000,01";
 		Assert.assertEquals(expectedBitstream, arduino.bitstream);
@@ -111,8 +111,8 @@ public class ReadSpeedTorqueTest {
 	//Amount of bits ok
 	//Start not found
 		arduino.bitstream = "111110000,11110000,0*";
-		SpeedTorque expected = new SpeedTorque();
-		SpeedTorque received = arduino.ReadSpeedTorque();
+		SpeedAngle expected = new SpeedAngle();
+		SpeedAngle received = arduino.readSpeedAngle();
 		Assert.assertEquals(expected, received);
 		String expectedBitstream = "111110000,11110000,0*";
 		Assert.assertEquals(expectedBitstream, arduino.bitstream);
@@ -124,8 +124,8 @@ public class ReadSpeedTorqueTest {
 	//ok# = /11110000,11110000,0*
 	//Amount of bits not ok
 		arduino.bitstream = "";
-		SpeedTorque expected = new SpeedTorque();
-		SpeedTorque received = arduino.ReadSpeedTorque();
+		SpeedAngle expected = new SpeedAngle();
+		SpeedAngle received = arduino.readSpeedAngle();
 		Assert.assertEquals(expected, received);
 		String expectedBitstream = "";
 		Assert.assertEquals(expectedBitstream, arduino.bitstream);

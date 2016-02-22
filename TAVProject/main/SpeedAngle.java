@@ -1,25 +1,25 @@
 package main;
 
-public class SpeedTorque {
+public class SpeedAngle {
 	double speed;
-	double torque;
+	double angle;
 	boolean success;
 	
-	public SpeedTorque () {
-		torque = 0;
+	public SpeedAngle () {
+		angle = 0;
 		speed = 0;
 		success = false;
 	}
 	
-	public SpeedTorque(double speed, double torque) {
-		this.torque = torque;
+	public SpeedAngle(double speed, double angle) {
+		this.angle = angle;
 		this.speed = speed;
 		this.success = true;
 	}
 	
 	@Override
     public boolean equals(Object obj) {	
-		SpeedTorque other = (SpeedTorque) obj;
+		SpeedAngle other = (SpeedAngle) obj;
 		if((other == null) || (getClass() != other.getClass())){
 	        return false;
 	    }
@@ -31,7 +31,7 @@ public class SpeedTorque {
 			// T F or F T
 			return false;
 		}
-		else if ((this.speed==other.speed) && (this.torque == other.torque)) {
+		else if ((this.speed==other.speed) && (this.angle == other.angle)) {
 			return true;
 		}
 		else {
@@ -42,6 +42,6 @@ public class SpeedTorque {
 	public void print() {
 		System.out.println("***NEW***");
 		System.out.println("speed= " + speed);
-		System.out.println("torque= "+ torque);
+		System.out.println("angle= "+ angle);
 	}
 }
