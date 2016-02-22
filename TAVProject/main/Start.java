@@ -16,6 +16,7 @@ public class Start {
 					Arduino arduino = new Arduino ();
 					ReceiveSpeedAngle speedangle = new ReceiveSpeedAngle (arduino, display);
 					SendSensorData sensordata = new SendSensorData (arduino, display);
+					//arduino.inputBuffer = "/10001111,00001111,1*"; // Testing receive
 					(new Thread(display)).start();
 					(new Thread(speedangle)).start();
 					(new Thread(sensordata)).start();

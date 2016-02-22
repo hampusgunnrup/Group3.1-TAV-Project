@@ -12,7 +12,7 @@ import main.UpdateDisplay;
 public class SendSensorDataTest {
 
 	@Test
-	public void testRunOneIteration() {
+	public void testRun() {
 		
 		Arduino arduino = new Arduino();
 		Display display = new Display();
