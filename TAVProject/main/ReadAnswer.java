@@ -19,11 +19,5 @@ public class ReadAnswer {
 			return false;
 		}
 	}
-	
-	public void print() {
-		System.out.println("***NEW***");
-		System.out.println("bufferstream= " + bufferStream);
-		System.out.println("errorcode= "+ errorcode);
-	}
 
 }

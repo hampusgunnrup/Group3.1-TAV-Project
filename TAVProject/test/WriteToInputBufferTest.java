@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before;
 import main.Arduino;
+import main.USB;
  
 public class WriteToInputBufferTest {
 
@@ -11,7 +12,8 @@ public class WriteToInputBufferTest {
 	
 	@Before
     public void setUp() {
-		arduino = new Arduino();
+		USB usb = new USB();
+		arduino = new Arduino(usb);
     }
 	
     @Test

@@ -1,9 +1,9 @@
 package main;
 
 public class Arduino {
-	public String inputBuffer;
+	//public String inputBuffer;
 	public String outputBuffer;
-	public String bitstream;
+	public String inputBuffer;
 	
 	int MaxTorque = 30;
 	int MinTorque = -30;
@@ -15,22 +15,21 @@ public class Arduino {
 	String end_Del = "*";
 	String comma = ",";
 	int minbitstreamsize = 21;
+	USB usb;
 	
-	public Arduino() {
+	public Arduino(USB usb) {
 		inputBuffer = "";
 		outputBuffer = "";
+		this.usb = usb; 
+		//inputBuffer = "";
 	}
 	
 	/**
-
 	  Description: write to input buffer
-
-	  Pre-condition: n > 0 and bitstream "s" == 21 bytes
-
+	  Pre-condition: n > 0 and bitstream "s" == 30 bytes
 	  Post-condition: return 0 if successful operation otherwise a constant non-zero denoting an error code
 	  
 	  Test-cases: 1.(N > 0 S >= N) 2.(N > 0 S < N) 3. (N < 0)
-
 	*/
 	//Write to Input Buffer
 	public int writeToInputBuffer(int n, String s) {
@@ -48,15 +47,11 @@ public class Arduino {
 	}
 	
 	/**
-
 	  Description: read from output buffer
-
 	  Pre-condition: n > 0 (then removes these "n" bits from beginning of output buffer stream)
-
 	  Post-condition: return object containing error code (0 = success) and a bitstream with "n" bits
 	  
 	  Test-cases: 1.(n>0 s>=n) 2.(n>0 s<n) 3.(n<0 s>n)
-
 	*/
 	//Read From Output Buffer
 	public ReadAnswer ReadFromBuffer(int n) {
@@ -86,72 +81,64 @@ public class Arduino {
 	}
 
 	/**
-
 	  Description: Read speed & torque
-
 	  Pre-condition: binary packet of 21 bytes.
-
 	  Post-condition: object with 2 attributes speed & torque
 	  
 	  Test-cases: ReadSpeedAndTorqueTest.java Test cases 1-8 (Too many to specify here)
-
 	*/
-	//Read Speed and Torque
-	public SpeedTorque ReadSpeedTorque() {
-		SpeedTorque answer;
-		if (bitstream.length() < minbitstreamsize) {//TC8
-			answer = new SpeedTorque();
+	//Read Speed and Angle
+	public SpeedAngle readSpeedAngle() {
+		SpeedAngle answer;
+		if (inputBuffer.length() < minbitstreamsize) {//TC8
+			answer = new SpeedAngle();
 		}
-		else if (bitstream.indexOf(start_Del)<0) {//TC7
-			answer = new SpeedTorque();
+		else if (inputBuffer.indexOf(start_Del)<0) {//TC7
+			answer = new SpeedAngle();
 		}
 		else {
-			int start = bitstream.indexOf(start_Del);//TC2,TC1
+			int start = inputBuffer.indexOf(start_Del);//TC2,TC1
 			int end = start + minbitstreamsize;
-			if (end-1 >= bitstream.length()) {//TC8
-				answer = new SpeedTorque();
+			if (end-1 >= inputBuffer.length()) {//TC8
+				answer = new SpeedAngle();
 			}
 			else
 			{
-				String packet = bitstream.substring(start, end);
+				String packet = inputBuffer.substring(start, end);
 				if (packet.charAt(20)!=end_Del.charAt(0)) {//TC6
-					answer = new SpeedTorque();
-					bitstream = bitstream.substring(start+1);
+					answer = new SpeedAngle();
+					inputBuffer = inputBuffer.substring(start+1);
 				}
 				else if (packet.charAt(9)!=comma.charAt(0)) {//TC5
-					answer = new SpeedTorque();
-					bitstream = bitstream.substring(start+1);
+					answer = new SpeedAngle();
+					inputBuffer = inputBuffer.substring(start+1);
 				}
 				else if (packet.charAt(18)!=comma.charAt(0)) {//TC4
-					answer = new SpeedTorque();
-					bitstream = bitstream.substring(start+1);
+					answer = new SpeedAngle();
+					inputBuffer = inputBuffer.substring(start+1);
 				}
 				else if (ParityCheck(packet.substring(0,18)).charAt(0) != packet.charAt(19)) { //TC3 parity check failed
-					answer = new SpeedTorque();
-					bitstream = bitstream.substring(start+1);
+					answer = new SpeedAngle();
+					inputBuffer = inputBuffer.substring(start+1);
 				}
 				else {//TC1,TC2
 					String speedStr = packet.substring(1,9);
 					String torqueStr = packet.substring(10,18);
 					double speed = bin8_to_dec(speedStr);
 					double torque = bin8_to_dec(torqueStr);
-					answer = new SpeedTorque(speed, torque);
-					bitstream = bitstream.substring(end);
+					answer = new SpeedAngle(speed, torque);
+					inputBuffer = inputBuffer.substring(end);
 				}
 			}
 		}
 		return answer; //object containing speed & torque
 	}
 	/**
-
 	  Description: send sensor data
-
 	  Pre-condition: (torque, IR distance, ultra - distance) x-y, n-m, a-b
-
 	  Post-condition: bitstream(binary) format(/[8],[8],[8],[1]*) 30 bit package
 	  
 	  Test-cases: TestSensoryData.java test cases 1-8
-
 	*/
 	//Send Sensory Data
 	public String SendSensoryData (double Torque, double IR_Dist, double ULTRA_Dist) {
@@ -162,6 +149,8 @@ public class Arduino {
 		if (((MinTorque <= Torque && Torque <= MaxTorque) && (Min_IR_Dist <= IR_Dist && IR_Dist <= Max_IR_Dist)) && (Min_Ultra_Dist <= ULTRA_Dist && ULTRA_Dist<= Max_Ultra_Dist)) {
 			answer = start_Del + T + comma + IR + comma + Ultra + comma + ParityCheck(T+IR+Ultra) + end_Del;
 		}
+		
+		this.outputBuffer += answer;
 		return answer;
 	}
 

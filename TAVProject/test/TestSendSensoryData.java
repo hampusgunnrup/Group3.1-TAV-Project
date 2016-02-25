@@ -3,6 +3,8 @@ package test;
 import org.junit.Assert;
 import org.junit.Test;
 import main.Arduino;
+import main.USB;
+
 import org.junit.Before;
 
 public class TestSendSensoryData {
@@ -10,7 +12,8 @@ public class TestSendSensoryData {
 
 	@Before
     public void setUp() {
-		arduino = new Arduino();
+		USB usb = new USB();
+		arduino = new Arduino(usb);
     }
 	
 	@Test

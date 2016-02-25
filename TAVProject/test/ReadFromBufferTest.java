@@ -5,13 +5,15 @@ import org.junit.Test;
 import org.junit.Before;
 import main.Arduino;
 import main.ReadAnswer;
+import main.USB;
 
 public class ReadFromBufferTest {
 	Arduino arduino;
 
 	@Before
     public void setUp() {
-		arduino = new Arduino();
+		USB usb = new USB();
+		arduino = new Arduino(usb);
     }
 	
 	@Test
