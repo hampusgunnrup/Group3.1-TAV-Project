@@ -23,6 +23,8 @@ public class OutofRangeDataMock {
 	@Test
 	public void testRunOne() {
 		display.frmGraphicalInterface.setVisible(true);
+		Mockito.when(usb.isconnected()).thenReturn(true);
+		Mockito.when(usb.processSensorData(arduino)).thenReturn("");
 		try {
 			Thread.sleep(2000); // Make sure that GUI is up
 		} catch(InterruptedException e) {
@@ -35,11 +37,7 @@ public class OutofRangeDataMock {
 		display.setIR("-10");
 		display.setTorque("-10");
 		display.setUltra("-10");
-		
-		
-		Mockito.when(usb.processSensorData(arduino)).thenReturn("");
-		
-		
+			
 		try {
 			Thread.sleep(2000); // Make sure that SendSensorData has finished
 		} catch(InterruptedException e) {
@@ -75,6 +73,8 @@ public class OutofRangeDataMock {
 	@Test
 	public void testRuntwo() {
 		display.frmGraphicalInterface.setVisible(true);
+		Mockito.when(usb.isconnected()).thenReturn(true);
+		Mockito.when(usb.processSensorData(arduino)).thenReturn("");
 		try {
 			Thread.sleep(2000); // Make sure that GUI is up
 		} catch(InterruptedException e) {
@@ -86,10 +86,7 @@ public class OutofRangeDataMock {
 		
 		display.setIR("100");
 		display.setTorque("100");
-		display.setUltra("100");
-		
-		Mockito.when(usb.processSensorData(arduino)).thenReturn("");
-		
+		display.setUltra("100");		
 		
 		try {
 			Thread.sleep(2000); // Make sure that SendSensorData has finished

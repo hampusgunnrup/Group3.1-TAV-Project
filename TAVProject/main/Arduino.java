@@ -81,11 +81,11 @@ public class Arduino {
 	}
 
 	/**
-	  Description: Read speed & torque
+	  Description: Read speed & angle
 	  Pre-condition: binary packet of 21 bytes.
-	  Post-condition: object with 2 attributes speed & torque
+	  Post-condition: object with 2 attributes speed & angle
 	  
-	  Test-cases: ReadSpeedAndTorqueTest.java Test cases 1-8 (Too many to specify here)
+	  Test-cases: ReadSpeedAndAngleTest.java Test cases 1-8 (Too many to specify here)
 	*/
 	//Read Speed and Angle
 	public SpeedAngle readSpeedAngle() {
@@ -123,15 +123,15 @@ public class Arduino {
 				}
 				else {//TC1,TC2
 					String speedStr = packet.substring(1,9);
-					String torqueStr = packet.substring(10,18);
+					String angleStr = packet.substring(10,18);
 					double speed = bin8_to_dec(speedStr);
-					double torque = bin8_to_dec(torqueStr);
-					answer = new SpeedAngle(speed, torque);
+					double angle = bin8_to_dec(angleStr);
+					answer = new SpeedAngle(speed, angle);
 					inputBuffer = inputBuffer.substring(end);
 				}
 			}
 		}
-		return answer; //object containing speed & torque
+		return answer; //object containing speed & angle
 	}
 	/**
 	  Description: send sensor data

@@ -11,7 +11,7 @@ import main.ReceiveSpeedAngle;
 import main.SendSensorData;
 import main.UpdateDisplay;
 
-public class NoramalDataMock {
+public class ReceiveOutofRangeDataMock {
 	USB usb = Mockito.mock(USB.class);
 	Arduino arduino = new Arduino(usb);
 	Display display = new Display();
@@ -24,7 +24,7 @@ public class NoramalDataMock {
 	public void testRunOne() {
 		display.frmGraphicalInterface.setVisible(true);
 		Mockito.when(usb.isconnected()).thenReturn(true);
-		Mockito.when(usb.processSensorData(arduino)).thenReturn("/00001111,00001111,0*");
+		Mockito.when(usb.processSensorData(arduino)).thenReturn("/01111111,01111111,0*");
 		try {
 			Thread.sleep(2000); // Make sure that GUI is up
 		} catch(InterruptedException e) {
@@ -46,6 +46,7 @@ public class NoramalDataMock {
 		
 		String bitstream = usb.processSensorData(arduino);
 		arduino.writeToInputBuffer(21, bitstream);
+		gui.setReceivedBinary("/01111111,01111111,0*");
 		
 		try {
 			Thread.sleep(2000); // Make sure that readSpeadAngle has finished
@@ -57,9 +58,9 @@ public class NoramalDataMock {
 		speedangle.stop();
 		sensordata.stop();
 		
-		String expectedSpeed = "15.0";
-		String expectedAngle = "15.0";
-		String expectedBitstream = "/00001111,00001111,0*";
+		String expectedSpeed = "";
+		String expectedAngle = "";
+		String expectedBitstream = "/01111111,01111111,0*";
 		
 		String actualSpeed = display.getSpeed();
 		String actualAngle = display.getAngle();
@@ -74,7 +75,8 @@ public class NoramalDataMock {
 	public void testRuntwo() {
 		display.frmGraphicalInterface.setVisible(true);
 		Mockito.when(usb.isconnected()).thenReturn(true);
-		Mockito.when(usb.processSensorData(arduino)).thenReturn("/00011111,00011111,0*");
+		Mockito.when(usb.processSensorData(arduino)).thenReturn("/11111111,11111111,0*");
+		
 		try {
 			Thread.sleep(2000); // Make sure that GUI is up
 		} catch(InterruptedException e) {
@@ -96,6 +98,7 @@ public class NoramalDataMock {
 		
 		String bitstream = usb.processSensorData(arduino);
 		arduino.writeToInputBuffer(21, bitstream);
+		gui.setReceivedBinary("/11111111,11111111,0*");
 		
 		try {
 			Thread.sleep(2000); // Make sure that readSpeadAngle has finished
@@ -107,9 +110,9 @@ public class NoramalDataMock {
 		speedangle.stop();
 		sensordata.stop();
 		
-		String expectedSpeed = "31.0";
-		String expectedAngle = "31.0";
-		String expectedBitstream = "/00011111,00011111,0*";
+		String expectedSpeed = "";
+		String expectedAngle = "";
+		String expectedBitstream = "/11111111,11111111,0*";
 		
 		String actualSpeed = display.getSpeed();
 		String actualAngle = display.getAngle();

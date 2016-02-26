@@ -22,6 +22,7 @@ public class SendSensorData implements Runnable {
 					Ultra= (Double) gui.getUltra();
 					Torque= (Double) gui.getTorque();
 					String answer = arduino.SendSensoryData(Torque, IR, Ultra);
+					
 						gui.setSentBinary(answer);
 				}
 				else {

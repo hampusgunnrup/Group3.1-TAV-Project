@@ -7,7 +7,7 @@ import main.Arduino;
 import main.SpeedAngle;
 import main.USB;
 
-public class ReadSpeedTorqueTest {
+public class ReadSpeedAngleTest {
 	Arduino arduino;
 
 	@Before

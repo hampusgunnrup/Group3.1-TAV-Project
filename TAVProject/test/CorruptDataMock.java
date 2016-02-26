@@ -23,6 +23,8 @@ public class CorruptDataMock {
 	@Test
 	public void testRunOne() {
 		display.frmGraphicalInterface.setVisible(true);
+		Mockito.when(usb.isconnected()).thenReturn(true);
+		Mockito.when(usb.processSensorData(arduino)).thenReturn("/00001111,000011");
 		try {
 			Thread.sleep(2000); // Make sure that GUI is up
 		} catch(InterruptedException e) {
@@ -35,11 +37,6 @@ public class CorruptDataMock {
 		display.setIR("10");
 		display.setTorque("10");
 		display.setUltra("10");
-		
-		
-		Mockito.when(usb.processSensorData(arduino)).thenReturn("/00001111,000011");
-		
-		
 		
 		try {
 			Thread.sleep(2000); // Make sure that SendSensorData has finished
@@ -77,6 +74,8 @@ public class CorruptDataMock {
 	@Test
 	public void testRuntwo() {
 		display.frmGraphicalInterface.setVisible(true);
+		Mockito.when(usb.isconnected()).thenReturn(true);
+		Mockito.when(usb.processSensorData(arduino)).thenReturn("/00011111,00011111,0");
 		try {
 			Thread.sleep(2000); // Make sure that GUI is up
 		} catch(InterruptedException e) {
@@ -89,11 +88,6 @@ public class CorruptDataMock {
 		display.setIR("14");
 		display.setTorque("14");
 		display.setUltra("14");
-		
-
-		Mockito.when(usb.processSensorData(arduino)).thenReturn("/00011111,00011111,0");
-		
-		
 		
 		try {
 			Thread.sleep(2000); // Make sure that SendSensorData has finished

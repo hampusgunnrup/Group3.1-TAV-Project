@@ -4,6 +4,10 @@ public class SpeedAngle {
 	double speed;
 	double angle;
 	boolean success;
+	private double maxAngle = 90; //Degrees/2 --> Used this notation because we needed to fit 180 degrees and -180 degrees in 8 bits
+	private double minAngle =  -90; //Degrees/2 --> Used this notation because we needed to fit 180 degrees and -180 degrees in 8 bits
+	private double maxSpeed = 100;
+	private double minSpeed = -50; //cars can not go back as fast as they go forward.
 	
 	public SpeedAngle () {
 		angle = 0;
@@ -12,9 +16,17 @@ public class SpeedAngle {
 	}
 	
 	public SpeedAngle(double speed, double angle) {
-		this.angle = angle;
-		this.speed = speed;
-		this.success = true;
+		if ((speed <= maxSpeed && speed >= minSpeed) &&
+			(angle <= maxAngle && angle >= minAngle)) {
+			this.angle = angle;
+			this.speed = speed;
+			this.success = true;
+		}
+		else {
+			angle = 0;
+			speed = 0;
+			success = false;
+		}
 	}
 	
 	@Override
