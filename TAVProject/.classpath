@@ -3,5 +3,6 @@
 	<classpathentry kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="C:/Users/hampus/Dropbox/School/Software-Engineering-and-Management/VT-2016/DIT085/Assignments/Git/Group3.1-TAV-Project/TAVProject/mockito-all-1.9.5.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>

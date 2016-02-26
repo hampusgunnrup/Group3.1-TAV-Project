@@ -19,7 +19,11 @@ public class ConnectionRecoveredMock {
 	ReceiveSpeedAngle speedangle = new ReceiveSpeedAngle (arduino, gui);
 	SendSensorData sensordata = new SendSensorData (arduino, gui);
 	
-
+	/*
+	 * Tests the full integration with the connection being lost and the recovered.
+	 * The system should work as soon as the connection is recovered.
+	 * The usb is mocked, with the connection first returning false, and then returning true.
+	 * */
 	@Test
 	public void testRunOne() {
 		display.frmGraphicalInterface.setVisible(true);

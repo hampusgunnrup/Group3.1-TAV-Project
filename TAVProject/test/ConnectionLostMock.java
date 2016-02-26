@@ -20,7 +20,10 @@ public class ConnectionLostMock {
 	ReceiveSpeedAngle speedangle = new ReceiveSpeedAngle (arduino, gui);
 	SendSensorData sensordata = new SendSensorData (arduino, gui);
 
-	
+	/*
+	 * Tests the full integration, mocking the usb to be disconnected. This should make the gui print the string
+	 * "Connection Lost with USB" in the two fields displaying the bitstream.
+	 * */
 	@Test
 	public void testRunOne() {
 		
